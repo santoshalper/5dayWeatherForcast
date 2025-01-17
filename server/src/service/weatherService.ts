@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 dotenv.config();
-
+const API_KEY = process.env.API_KEY || '';
+const API_BASE_URL = process.env.API_BASE_URL || '';
 // TODO: Define an interface for the Coordinates object
 
 // TODO: Define a class for the Weather object
