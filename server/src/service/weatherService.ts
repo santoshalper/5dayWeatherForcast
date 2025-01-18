@@ -22,13 +22,31 @@ class Weather {
 // TODO: Complete the WeatherService class
 class WeatherService {
   // TODO: Define the baseURL, API key, and city name properties
-  const
+  baseURL: string = API_BASE_URL;
+  API_KEY: string = API_KEY;
+  cityName: string = '';
   // TODO: Create fetchLocationData method
-  // private async fetchLocationData(query: string) {}
+  private async fetchLocationData(query: string) {
+    try {
+      const url = `${this.baseURL}?/data/2.5/forecast/${query}`;
+      const response = await fetch(url);
+
+      if(!response.ok) {
+        throw new Error(`HTTP error. status: ${response.status}`);
+      }
+      const data = await response.json();
+      return data;
+    }
+    catch(error){
+      console.error('Error fetching location data:', error);
+    }
+  }
   // TODO: Create destructureLocationData method
-  // private destructureLocationData(locationData: Coordinates): Coordinates {}
+  private destructureLocationData(locationData: Coordinates): Coordinates {}
   // TODO: Create buildGeocodeQuery method
-  // private buildGeocodeQuery(): string {}
+  private buildGeocodeQuery(): string {
+    return `q=`
+  }
   // TODO: Create buildWeatherQuery method
   // private buildWeatherQuery(coordinates: Coordinates): string {}
   // TODO: Create fetchAndDestructureLocationData method
