@@ -19,13 +19,18 @@ class HistoryService {
       return readFile;
     }
     catch(error){
-      console.error('Error reading file:', error);
+      console.error('Error reading DB file:', error);
       return '';
     }
   }
   // TODO: Define a write method that writes the updated cities array to the searchHistory.json file
   private async write(cities: City[]) {
-    await fs.writeFile('../../db/searchHistory.json',JSON.stringify(cities));
+    try{
+      await fs.writeFile('../../db/searchHistory.json',JSON.stringify(cities));
+    }
+    catch(error){
+      console.error('Error writing DB file:', error);
+    }
   }
   // TODO: Define a getCities method that reads the cities from the searchHistory.json file and returns them as an array of City objects
   async getCities() {
