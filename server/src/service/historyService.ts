@@ -1,7 +1,6 @@
 import fs from 'node:fs/promises';
 import { v4 as uuidv4 } from 'uuid';
 
-const
 // TODO: Define a City class with name and id properties
 class City {
   name: string;
@@ -15,8 +14,14 @@ class City {
 class HistoryService {
   // TODO: Define a read method that reads from the searchHistory.json file
   private async read() {
-    const readFile = await fs.readFile('../../db/searchHistory.json', 'utf-8');
-    return readFile;
+    try{  
+      const readFile = await fs.readFile('../../db/searchHistory.json', 'utf-8');
+      return readFile;
+    }
+    catch(error){
+      console.error('Error reading file:', error);
+      return '';
+    }
   }
   // TODO: Define a write method that writes the updated cities array to the searchHistory.json file
   private async write(cities: City[]) {
@@ -24,16 +29,14 @@ class HistoryService {
   }
   // TODO: Define a getCities method that reads the cities from the searchHistory.json file and returns them as an array of City objects
   async getCities() {
-    const data = await fs.readFile('../../db/searchHistory.json', 'utf-8');
+    const data = await this.read();
     const cities = JSON.parse(data);
-    const parsedCities = JSON.parse(cities);
-    return parsedCities;
+    return cities;
   }
   // TODO Define an addCity method that adds a city to the searchHistory.json file
   async addCity(city: string) {
     const newCity = new City(city, uuidv4());
-    const data = await fs.readFile('../../db/searchHistory.json', 'utf-8');
-    const cities = JSON.parse(data);
+    const cities = await this.getCities();
     if (!cities.some((existCity: City) => existCity.name === newCity.name)){
       cities.push(newCity);
     } 
