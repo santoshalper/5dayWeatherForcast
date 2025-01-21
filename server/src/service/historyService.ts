@@ -15,7 +15,7 @@ class HistoryService {
   // TODO: Define a read method that reads from the searchHistory.json file
   private async read() {
     try{  
-      const readFile = await fs.readFile('../../db/searchHistory.json', 'utf-8');
+      const readFile = await fs.readFile('./db/searchHistory.json', 'utf-8');
       return readFile;
     }
     catch(error){
@@ -26,7 +26,7 @@ class HistoryService {
   // TODO: Define a write method that writes the updated cities array to the searchHistory.json file
   private async write(cities: City[]) {
     try{
-      await fs.writeFile('../../db/searchHistory.json',JSON.stringify(cities));
+      await fs.writeFile('./db/searchHistory.json',JSON.stringify(cities));
     }
     catch(error){
       console.error('Error writing DB file:', error);
@@ -40,12 +40,12 @@ class HistoryService {
   }
   // TODO Define an addCity method that adds a city to the searchHistory.json file
   async addCity(city: string) {
-    const newCity = new City(city, uuidv4());
+    const newCity = new City(city.toLowerCase().replace(/\b\w/g, s=> s.toUpperCase()), uuidv4());
     const cities = await this.getCities();
-    if (!cities.some((existCity: City) => existCity.name === newCity.name)){
+    if (!(cities.some((existCity: City) => existCity.name === newCity.name))){
       cities.push(newCity);
+      this.write(cities);
     } 
-    this.write(cities);
   }
   // * BONUS TODO: Define a removeCity method that removes a city from the searchHistory.json file
   async removeCity(id: string) {

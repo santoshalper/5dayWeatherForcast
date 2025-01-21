@@ -7,8 +7,9 @@ const __dirname = path.dirname(__filename);
 const router = Router();
 
 // TODO: Define route to serve index.html
+router.use(express.static('../client/dist'))
 router.get('*', (_req: Request , res: Response) => {
-    res.sendFile(path.join(__dirname, '../../../client/index.html'));
+    res.sendFile(path.join(__dirname, '../client/index.html'));
 });
 
 
