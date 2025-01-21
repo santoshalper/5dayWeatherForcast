@@ -99,10 +99,6 @@ class WeatherService {
     const weather = new Weather(this.cityName,date,icon,tempF,windSpeed,humidity);
     return weather;
   }
-  // TODO: Complete buildForecastArray method
-  // private buildForecastArray(currentWeather: Weather, weatherData: any[]) {
-  //   weatherData.push(currentWeather);
-  // }
   // TODO: Complete getWeatherForCity method
   async getWeatherForCity(city: string) {
     this.cityName = city.toLowerCase().replace(/\b\w/g, s=> s.toUpperCase());
